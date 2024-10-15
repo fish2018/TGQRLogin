@@ -50,31 +50,21 @@ async def to_v2(v1,client):
 
     return v2
 
-
-# 创建二维码实例
-qr = QRCode(
-    version=1,
-    error_correction=constants.ERROR_CORRECT_L,
-    box_size=10,
-    border=4,
-)
-
-def gen_qr(token: str, file_path: str):
+def show_qr(url):
+    file_path = 'img/qr_code.jpg'
+    print(f'QR code saved to {file_path}')
+    qr = QRCode(
+        version=1,
+        error_correction=constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
     qr.clear()
     qr.add_data(token)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
-    # 确保目录存在
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    # 保存二维码图片
     img.save(file_path)
-
-def display_url_as_qr(url):
-    print(url)  # 打印URL
-    # 假设您有一个方法来显示二维码，这里仅生成二维码图片
-    file_path = 'img/qr_code.jpg'
-    gen_qr(url, file_path)
-    print(f'QR code saved to {file_path}')
 
 # 定义一个信号处理函数
 def signal_handler(signum, frame):
@@ -96,7 +86,7 @@ async def main(client: telethon.TelegramClient):
 
     r = False
     while not r:
-        display_url_as_qr(qr_login.url)
+        show_qr(qr_login.url)
         # 等待登录完成
         try:
             r = await qr_login.wait(50)
