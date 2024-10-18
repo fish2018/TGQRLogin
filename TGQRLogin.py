@@ -60,7 +60,7 @@ def show_qr(url):
         border=4,
     )
     qr.clear()
-    qr.add_data(token)
+    qr.add_data(url)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
