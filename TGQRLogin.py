@@ -19,10 +19,10 @@ async def to_v2(v1,client):
     '''
     user = await client.get_me()
     user_id = user.id
-    dc_id = user.photo.dc_id
+    # dc_id = user.photo.dc_id
     v1 = StringSession(v1)
     v1_json = json.loads(jsonpickle.encode(v1))
-    # dc_id = v1_json.get('_dc_id')
+    dc_id = v1_json.get('_dc_id')
     ipv4 = v1_json.get('_server_address')
     port = v1_json.get('_port')
     auth_key = v1_json.get('_auth_key').get('_key')
